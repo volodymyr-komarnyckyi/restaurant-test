@@ -20,8 +20,3 @@ class Menu(models.Model):
 
     def __str__(self):
         return f"Menu for {self.restaurant.name} with items: {self.items}"
-
-
-# class Vote(models.Model):
-#     menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
-#     vote = models.IntegerField(choices=[(1, 'Yes'), (2, 'No')])

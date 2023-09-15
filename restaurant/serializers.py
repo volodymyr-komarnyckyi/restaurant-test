@@ -6,13 +6,15 @@ from restaurant.models import (
 )
 
 
-class RestaurantSerializer(serializers.ModelSerializer):
+class MenuSerializer(serializers.ModelSerializer):
+
     class Meta:
-        model = Restaurant
+        model = Menu
         fields = "__all__"
 
 
-class MenuSerializer(serializers.ModelSerializer):
+class RestaurantSerializer(serializers.ModelSerializer):
+
     class Meta:
-        model = Menu
+        model = Restaurant
         fields = "__all__"
