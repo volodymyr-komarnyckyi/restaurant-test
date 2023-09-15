@@ -43,8 +43,7 @@ class AuthTokenSerializer(serializers.Serializer):
                 if not user.is_active:
                     msg = _("User account is disabled.")
                     raise serializers.ValidationError(
-                        msg,
-                        code="authorization"
+                        msg, code="authorization"
                     )
             else:
                 msg = _("Unable to log in with provided credentials.")
