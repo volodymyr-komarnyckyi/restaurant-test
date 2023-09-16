@@ -31,27 +31,28 @@ Restaurant API Service is designed to streamline the management of restaurant-re
    POSTGRES_DB= name of your db
    POSTGRES_USER= username of your db user
    POSTGRES_PASSWORD= your db password
+   POSTGRES_PORT= your db port
    SECRET_key=" your django secret key "
    ```
 3. Run command:
    ```
    docker-compose up --build
+   docker ps
+   """Choose the last one id"""
+   docker exec -it (id) bash
+   python manage.py createsuperuser
    ```
 4. App will be available at: ```127.0.0.1:8000```
-5. Login using next credentials:
-   ```
-   admin@admin.com
-   Volodymyr8204
-   ```
+
 ## Endpoints
    ```
    "restaurant" : 
-                "http://127.0.0.1:8000/api/theatre/genres/"
-                "http://127.0.0.1:8000/api/theatre/actors/"
-                "http://127.0.0.1:8000/api/theatre/plays/"
-                "http://127.0.0.1:8000/api/theatre/theatre_halls/"
-                "http://127.0.0.1:8000/api/theatre/performances/"
-                "http://127.0.0.1:8000/api/theatre/reservations/"
+                   "http://127.0.0.1:8000/api/restaurant/restaurants/"
+                   "http://127.0.0.1:8000/api/restaurant/restaurants/<int:pk>/"
+                   "http://127.0.0.1:8000/api/restaurant/menus/"
+                   "http://127.0.0.1:8000/api/restaurant/menus/<int:pk>/vote/"
+                   "http://127.0.0.1:8000/api/restaurant/menus/<int:pk>/result"
+                   "http://127.0.0.1:8000/api/restaurant/menus/get-today-menu/"
    "employee" : 
                    "http://127.0.0.1:8000/api/user/register/"
                    "http://127.0.0.1:8000/api/user/me/"
@@ -63,10 +64,7 @@ Restaurant API Service is designed to streamline the management of restaurant-re
                    "http://127.0.0.1:8000/api/redoc/"
    ```
 
-## Schema
-![db_schema.png](rest_db.png)
-
 ## Presentation
 ![swagger.png](swagger.png)
-![trip_list.png](play_list.png)
+![restaurant-list.png](restaurant-list.png)
 ![api_root.png](api_root.png)

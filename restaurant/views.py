@@ -9,11 +9,6 @@ from restaurant.models import Restaurant, Menu, Vote
 from restaurant.serializers import RestaurantSerializer, MenuSerializer
 
 
-# class RestaurantViewSet(viewsets.ModelViewSet):
-#     queryset = Restaurant.objects.all()
-#     serializer_class = RestaurantSerializer
-
-
 class MenuViewSet(viewsets.ModelViewSet):
     queryset = Menu.objects.all()
     serializer_class = MenuSerializer
@@ -67,33 +62,6 @@ class MenuViewSet(viewsets.ModelViewSet):
         ).count()
 
         return Response({"menu": menu.id, "vote_count": vote_count})
-
-
-
-
-#
-# class RestaurantViewSet(viewsets.ModelViewSet):
-#     queryset = Restaurant.objects.all()
-#     serializer_class = RestaurantSerializer
-#
-#     def list(self, request, *args, **kwargs):
-#         today = date.today()
-#         restaurants = self.get_queryset()
-#
-#         restaurant_data = []
-#         for restaurant in restaurants:
-#             menu = restaurant.menus.filter(date=today).first()
-#             if menu:
-#                 menu_data = MenuSerializer(menu).data
-#             else:
-#                 menu_data = {"message": "No menu available for today"}
-#
-#             restaurant_data.append({
-#                 "restaurant": RestaurantSerializer(restaurant).data,
-#                 "menu": menu_data
-#             })
-#
-#         return Response(restaurant_data)
 
 
 class RestaurantViewSet(viewsets.ModelViewSet):
