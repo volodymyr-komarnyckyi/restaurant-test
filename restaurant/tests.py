@@ -4,13 +4,14 @@ from django.utils import timezone
 from user.models import User
 from .models import Restaurant, Menu, Vote
 from rest_framework import status
-from datetime import date
 from rest_framework.test import APIClient
 
 
 @pytest.fixture
 def create_restaurant():
-    return Restaurant.objects.create(name="Test Restaurant", description="Test Description")
+    return Restaurant.objects.create(
+        name="Test Restaurant", description="Test Description"
+    )
 
 
 @pytest.fixture
@@ -19,19 +20,24 @@ def create_menu(create_restaurant):
         restaurant=create_restaurant,
         date=timezone.now().date(),
         items="Item 1, Item 2, Item 3",
-        price=10.99
+        price=10.99,
     )
 
 
 @pytest.fixture
 def create_vote(create_menu, user):
-    return Vote.objects.create(menu=create_menu, employee=user, timestamp=timezone.now())
+    return Vote.objects.create(
+        menu=create_menu, employee=user, timestamp=timezone.now()
+    )
 
 
 @pytest.fixture
 def user():
     from user.models import User
-    return User.objects.create_user(email="test@user.com", password="testpassword")
+
+    return User.objects.create_user(
+        email="test@user.com", password="testpassword"
+    )
 
 
 @pytest.mark.django_db
@@ -46,7 +52,7 @@ def test_create_menu(create_menu):
     menu = Menu.objects.get(restaurant__name="Test Restaurant")
     assert menu.restaurant.name == "Test Restaurant"
     assert menu.items == "Item 1, Item 2, Item 3"
-    assert menu.price == Decimal('10.99')
+    assert menu.price == Decimal("10.99")
 
 
 @pytest.mark.django_db
@@ -70,30 +76,28 @@ def api_client():
 @pytest.fixture
 def create_user():
     user = User.objects.create_user(
-        email="test@user.com",
-        password="testpassword"
+        email="test@user.com", password="testpassword"
     )
     return user
 
 
-@pytest.fixture
-def create_restaurant():
-    restaurant = Restaurant.objects.create(
-        name="Test Restaurant",
-        description="Test Description"
-    )
-    return restaurant
+# @pytest.fixture
+# def create_restaurant():
+#     restaurant = Restaurant.objects.create(
+#         name="Test Restaurant", description="Test Description"
+#     )
+#     return restaurant
 
 
-@pytest.fixture
-def create_menu(create_restaurant):
-    menu = Menu.objects.create(
-        restaurant=create_restaurant,
-        date=date.today(),
-        items="Item 1, Item 2, Item 3",
-        price=10.99
-    )
-    return menu
+# @pytest.fixture
+# def create_menu(create_restaurant):
+#     menu = Menu.objects.create(
+#         restaurant=create_restaurant,
+#         date=date.today(),
+#         items="Item 1, Item 2, Item 3",
+#         price=10.99,
+#     )
+#     return menu
 
 
 @pytest.mark.django_db
