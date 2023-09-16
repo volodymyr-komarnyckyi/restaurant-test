@@ -21,12 +21,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     "rest_framework",
     "drf_spectacular",
     "pytest",
     "pytest_django",
-
     "restaurant",
     "user",
 ]
@@ -69,7 +67,7 @@ DATABASES = {
         "USER": os.getenv("POSTGRES_USER"),
         "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
         "HOST": os.getenv("POSTGRES_HOST"),
-        "PORT": os.getenv("POSTGRES_PORT")
+        "PORT": os.getenv("POSTGRES_PORT"),
     }
 }
 

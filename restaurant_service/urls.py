@@ -5,14 +5,16 @@ from django.urls import path, include
 from drf_spectacular.views import (
     SpectacularAPIView,
     SpectacularSwaggerView,
-    SpectacularRedocView
+    SpectacularRedocView,
 )
 
 urlpatterns = [
     path("admin/", admin.site.urls),
 
     path(
-        "api/restaurant/", include("restaurant.urls", namespace="restaurant")
+        "api/restaurant/",
+        include("restaurant.urls",
+                namespace="restaurant")
     ),
 
     path("api/user/", include("user.urls", namespace="user")),
@@ -20,13 +22,12 @@ urlpatterns = [
     path(
         "api/doc/",
         SpectacularAPIView.as_view(),
-        name="schema"
-    ),
+        name="schema"),
 
     path(
         "api/doc/swagger/",
         SpectacularSwaggerView.as_view(url_name="schema"),
-        name="swagger-ui"
+        name="swagger-ui",
     ),
 
     path(

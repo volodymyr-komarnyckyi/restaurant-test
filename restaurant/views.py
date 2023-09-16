@@ -80,10 +80,12 @@ class RestaurantViewSet(viewsets.ModelViewSet):
             else:
                 menu_data = {"message": "No menu available for today"}
 
-            restaurant_data.append({
-                "restaurant": RestaurantSerializer(restaurant).data,
-                "menu": menu_data
-            })
+            restaurant_data.append(
+                {
+                    "restaurant": RestaurantSerializer(restaurant).data,
+                    "menu": menu_data
+                }
+            )
 
         return Response(restaurant_data)
 
@@ -99,6 +101,6 @@ class RestaurantViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(instance)
         data = serializer.data
-        data['menu'] = menu_data
+        data["menu"] = menu_data
 
         return Response(data)
