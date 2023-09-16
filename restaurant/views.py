@@ -18,11 +18,7 @@ class MenuViewSet(viewsets.ModelViewSet):
     queryset = Menu.objects.all()
     serializer_class = MenuSerializer
 
-    @action(
-        detail=False,
-        url_path="get-today-menu",
-        methods=["GET"]
-    )
+    @action(detail=False, url_path="get-today-menu", methods=["GET"])
     def current_day_menu(self, request):
         today = date.today()
         menu = Menu.objects.filter(date=today).first()
@@ -31,40 +27,43 @@ class MenuViewSet(viewsets.ModelViewSet):
             serializer = MenuSerializer(menu)
             return Response(serializer.data)
         else:
-            return Response({'message': 'No menu available for today'}, status=status.HTTP_404_NOT_FOUND)
+            return Response(
+                {"message": "No menu available for today"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
 
-    @action(
-        detail=True,
-        url_path="vote",
-        methods=["POST"]
-    )
+    @action(detail=True, url_path="vote", methods=["POST"])
     def vote(self, request, pk=None):
         menu = get_object_or_404(Menu, pk=pk)
         user = request.user
 
         if not user.is_authenticated:
-            return Response({'message': 'Authentication required to vote'},
-                            status=status.HTTP_401_UNAUTHORIZED)
+            return Response(
+                {"message": "Authentication required to vote"},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
 
         existing_vote = Vote.objects.filter(menu=menu, employee=user).first()
         if existing_vote:
-            return Response({'message': 'You have already voted for this menu'},
-                            status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"message": "You have already voted for this menu"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
         new_vote = Vote(menu=menu, employee=user, timestamp=now())
         new_vote.save()
 
-        return Response({'message': 'Vote recorded successfully'}, status=status.HTTP_201_CREATED)
+        return Response(
+            {"message": "Vote recorded successfully"},
+            status=status.HTTP_201_CREATED
+        )
 
-    @action(
-        detail=True,
-        url_path="results",
-        methods=["GET"]
-    )
+    @action(detail=True, url_path="results", methods=["GET"])
     def results(self, request, pk=None):
         menu = self.get_object()
         today = date.today()
-        vote_count = Vote.objects.filter(menu=menu, timestamp__date=today).count()
+        vote_count = Vote.objects.filter(
+            menu=menu, timestamp__date=today
+        ).count()
 
-        return Response({'menu': menu.id, 'vote_count': vote_count})
-
+        return Response({"menu": menu.id, "vote_count": vote_count})
