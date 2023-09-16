@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -20,3 +21,12 @@ class Menu(models.Model):
 
     def __str__(self):
         return f"Menu for {self.restaurant.name} with items: {self.items}"
+
+
+class Vote(models.Model):
+    menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
+    employee = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Vote by {self.employee} for {self.menu}"
